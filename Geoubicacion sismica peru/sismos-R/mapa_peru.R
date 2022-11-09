@@ -8,7 +8,7 @@ library(ggplot2)
 library(ggrepel)
 
 
-dirmapas <- "E:/universidad/8-sem/comp-paralela/Geoubicacion sismica peru/sismos-R/DEPARTAMENTOS_inei_geogpsperu_suyopomalia"
+dirmapas <- "C:/Users/Lenovo/Documents/GitHub/Computacion-Paralela_Yefer/Geoubicacion sismica peru/sismos-R/DEPARTAMENTOS_inei_geogpsperu_suyopomalia"
 
 setwd(dirmapas)
 
