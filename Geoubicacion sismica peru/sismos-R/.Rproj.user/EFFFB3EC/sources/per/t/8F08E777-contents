@@ -1,0 +1,45 @@
+dir_datos <- file.choose()
+datos <- read.csv(dir_datos,header = T, sep = ",")
+
+library(sf)
+#install.packages("tmap")
+library(tmap)
+library(sp)
+library(ggplot2)
+
+head(datos)
+
+coordinates(datos) <- ~LONGITUD + LATITUD
+
+datos <- st_as_sf(datos)
+
+st_crs(datos) <- 4326
+
+
+ggplot(data = datos) + geom_sf(alpha = 0.1)
+
+
+install.packages("mapview")
+
+library(mapview)
+
+mapview(peru_d) +
+mapview(datos, zcol = "MAGNITUD",legend = FALSE, cex = "pop")
+
+#Con mapas leaflet
+datos2 <- read.csv(dir_datos,header = T, sep = ",")
+library(leaflet)
+library(leaflet.extras) 
+library(rworldxtra)
+library(tidyverse)
+library(sf)
+library(raster)
+
+leaflet() %>% 
+  addTiles() %>% 
+  addCircles(data = datos2, lat = ~LATITUD, lng = ~LONGITUD)
+
+leaflet() %>% 
+  addTiles() %>% 
+  addHeatmap(data = datos2, lat = ~LATITUD, lng = ~LONGITUD, blur = 2.5, radius = 2.1)
+
