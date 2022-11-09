@@ -2,7 +2,7 @@ dir_datos <- file.choose()
 datos <- read.csv(dir_datos,header = T, sep = ",")
 
 library(sf)
-install.packages("tmap")
+#install.packages("tmap")
 library(tmap)
 library(sp)
 library(ggplot2)
@@ -41,15 +41,5 @@ leaflet() %>%
 
 leaflet() %>% 
   addTiles() %>% 
-  addHeatmap(data = datos2, lat = ~LATITUD, lng = ~LONGITUD, blur = 2.5, radius = 2.3)
+  addHeatmap(data = datos2, lat = ~LATITUD, lng = ~LONGITUD, blur = 2.5, radius = 2.1)
 
-
-
-heat_map <- leaflet() %>% addTiles()
-for (i in 1:length(datos2$MAGNITUD)) {
-  heat_map = heat_map %>% 
-    addHeatmap(data = datos2$MAGNITUD, lat = ~datos2$LATITUD, lng = ~datos2$LONGITUD, blur = 25, radius = 20)
-}
-heat_map %>% 
-  addLayersControl(baseGroups = nombres, 
-                   options = layersControlOptions(collapsed = FALSE))
