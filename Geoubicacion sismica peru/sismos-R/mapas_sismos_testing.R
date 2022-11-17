@@ -20,11 +20,15 @@ ggplot(data = datos) + geom_sf(alpha = 0.1)
 
 
 install.packages("mapview")
+install.packages("mapedit")
 
 library(mapview)
+library(mapedit)
 
 mapview(peru_d) +
 mapview(datos, zcol = "MAGNITUD",legend = FALSE, cex = "pop")
+
+mapview(africa)
 
 #Con mapas leaflet
 datos2 <- read.csv(dir_datos,header = T, sep = ",")
@@ -37,7 +41,12 @@ library(raster)
 
 leaflet() %>% 
   addTiles() %>% 
-  addCircles(data = datos2, lat = ~LATITUD, lng = ~LONGITUD)
+  addCircle(data = datos2, lat = ~LATITUD, lng = ~LONGITUD)
+
+#leaflet() %>% 
+ # addTiles() %>% 
+  #addAwesomeMarkers(data = datos2, lat = ~LATITUD, lng = ~LONGITUD)
+
 
 leaflet() %>% 
   addTiles() %>% 

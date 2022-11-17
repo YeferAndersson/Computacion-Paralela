@@ -1,26 +1,26 @@
 {
-    "id": "8F08E777",
+    "id": "35EDEACD",
     "path": "~/GitHub/Computacion-Paralela_Yefer/Geoubicacion sismica peru/sismos-R/mapas_sismos_testing.R",
     "project_path": "mapas_sismos_testing.R",
     "type": "r_source",
-    "hash": "2714168667",
+    "hash": "187270555",
     "contents": "",
     "dirty": false,
-    "created": 1668012780240.0,
+    "created": 1668635683606.0,
     "source_on_save": false,
-    "relative_order": 3,
+    "relative_order": 2,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "44,0",
-        "scrollLine": "24"
+        "cursorPosition": "47,68",
+        "scrollLine": "33"
     },
     "folds": "",
-    "lastKnownWriteTime": 1668013261,
+    "lastKnownWriteTime": 1668641276,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1668013261338,
+    "last_content_update": 1668641276193,
     "read_only": false,
     "read_only_alternatives": []
 }
