@@ -28,26 +28,6 @@ for (i in 1:25) {
   coordenadas_dep = rbind(coordenadas_dep,agregar)
 }
 
-abctest = c()
-abctest = c(abctest,2)
-
-DEPARTAMENTO = c()
-for (j in 1:25) {
-  for (k in 1:(nrow(datos3))) {
-    if(datos3[k,]$LONGITUD > coordenadas_dep[j,]$minx & 
-       datos3[k,]$LATITUD > coordenadas_dep[j,]$miny &
-       datos3[k,]$LONGITUD < coordenadas_dep[j,]$maxx &
-       datos3[k,]$LATITUD < coordenadas_dep[j,]$maxy ){
-      DEPARTAMENTO = c(DEPARTAMENTO,coordenadas_dep[j,]$dep)
-    }
-  }
-}
-
-if(2 < 3 & 
-   4 < 3 & 
-   2 < 3 ){
-  print("true")
-}
 
 
 ggplot(data = peru_d %>%
@@ -60,9 +40,11 @@ ggplot(data = peru_d %>%
                  alpha = MAGNITUD,
                  size = MAGNITUD))+
   scale_radius(range = c(0.2,3))+
-  scale_color_viridis()
+  scale_color_viridis() +
+  labs(title="Magnitud de los sismos en la Region de Puno",
+       subtitle="Desde el 1960",
+       caption="Datos de IGP2022")
 
-mapview(peru_d$geometry)
 
 #Mapa de calor
 ggplot(data = peru_d) +
@@ -78,30 +60,15 @@ ggplot(data = peru_d) +
   scale_fill_gradient(low = "yellow",
                       high = "red") +
   scale_alpha(range = c(0.2, 0.7)) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  labs(title="Mapa de calor",
+       subtitle="Desde el 1960",
+       caption="Datos de IGP2022")
 
 
+#2
 ggplot(data = peru_d) +
-  geom_sf() + theme(legend.position = 'none') +
-  geom_polygon(data = bohol_mapdf,
-               aes(x =long,
-                   y = lat,
-                   group = group),
-               color = "darkcyan") +
-  stat_density2d(aes(fill = ..level..,
-                     x = longitude,
-                     y = latitude),
-                 alpha = .4,
-                 bins = 8,
-                 geom = "polygon",
-                 data = Oct_2015_Quake) +
-  scale_fill_viridis() +
-  geom_polygon(data = loon_mapdf,
-               aes(x = long,
-                   y = lat,
-                   group = group),
-               color = "green",
-               fill = "red")
+  geom_sf() +
   geom_density2d(data = datos3,
                  aes(x = LONGITUD,
                      y = LATITUD),
@@ -115,10 +82,10 @@ ggplot(data = peru_d) +
                  geom = "polygon",
                  size = 0.01,
                  bins = 8) +
-  theme(legend.position = "none")
-
-ggplot(data = peru_d) +
-  geom_sf() + 
+  theme(legend.position = "none")+
+  labs(title="Mapa de calor - 2",
+       subtitle="Desde el 1960",
+       caption="Datos de IGP2022")
   
 
 library(rcartocolor)
@@ -132,8 +99,11 @@ mapa_magnitud <- ggplot(data = peru_d) +
                  color = MAGNITUD,
                  alpha = MAGNITUD,
                  size = MAGNITUD))+
-  scale_radius(range = c(0.2,3))+
-  scale_color_viridis()
+  scale_radius(range = c(0.15,2.5))+
+  scale_color_viridis()+
+  labs(title="Magnitud de los sismos",
+       subtitle="Desde el 1960",
+       caption="Datos de IGP2022")
 
 mapa_magnitud
 
@@ -149,11 +119,12 @@ ggplot(data = peru_d) +
                  alpha = PROFUNDIDAD,
                  size = PROFUNDIDAD))+
   scale_radius(range = c(0.2,3))+
-  scale_color_viridis()
-
+  scale_color_viridis()+
+  labs(title="Profundidad de los sismos",
+       subtitle="Desde el 1960",
+       caption="Datos de IGP2022")
 
 #POR AÑO
-
 ggplot(data = peru_d) +
   geom_sf() +
   geom_point(data = datos3 %>% filter(year(FECHA_UTC) == 2021),
@@ -163,6 +134,9 @@ ggplot(data = peru_d) +
                  alpha = MAGNITUD,
                  size = MAGNITUD))+
   scale_radius(range = c(1,3))+
-  scale_color_viridis()
+  scale_color_viridis()+
+  labs(title="Magnitud de los sismos",
+       subtitle="En el año 2021",
+       caption="Datos de IGP2022")
 
 
