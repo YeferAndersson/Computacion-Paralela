@@ -9,42 +9,9 @@ library(lubridate)
 library(ggmap)
 library(ggplot2)
 library(viridis)
-
-
-
-  
-#por region
-sismo_puno = datos3 %>% filter(LONGITUD > -71.11809 , LONGITUD < -68.81422 , LATITUD > -17.29547 , LATITUD < -13.00393 )
-peru_d$geometry[peru_d$NOMBDEP == "PUNO"]
-
-coordenadas_dep = data.frame(dep = c(), minx=c(), miny=c(), maxx = c(), maxy = c())
-
-for (i in 1:25) {
-  minx = as.data.frame(st_coordinates(peru_d[i,]$geometry))$X %>% min()
-  miny = as.data.frame(st_coordinates(peru_d[i,]$geometry))$Y %>% min()
-  maxx = as.data.frame(st_coordinates(peru_d[i,]$geometry))$X %>% max()
-  maxy = as.data.frame(st_coordinates(peru_d[i,]$geometry))$X %>% max()
-  agregar = data.frame(dep = c(peru_d[i,]$NOMBDEP), minx=c(minx), miny=c(miny), maxx = c(maxx), maxy = c(maxy))
-  coordenadas_dep = rbind(coordenadas_dep,agregar)
-}
-
-
-
-ggplot(data = peru_d %>%
-         filter(NOMBDEP=="PUNO")) +
-  geom_sf() +
-  geom_point(data = sismo_puno,
-             aes(x = LONGITUD,
-                 y = LATITUD,
-                 color = MAGNITUD,
-                 alpha = MAGNITUD,
-                 size = MAGNITUD))+
-  scale_radius(range = c(0.2,3))+
-  scale_color_viridis() +
-  labs(title="Magnitud de los sismos en la Region de Puno",
-       subtitle="Desde el 1960",
-       caption="Datos de IGP2022")
-
+library(rcartocolor)
+library(plotly)
+library(sf)
 
 #Mapa de calor
 ggplot(data = peru_d) +
@@ -66,7 +33,7 @@ ggplot(data = peru_d) +
        caption="Datos de IGP2022")
 
 
-#2
+#Mapa de calor 2
 ggplot(data = peru_d) +
   geom_sf() +
   geom_density2d(data = datos3,
@@ -88,8 +55,7 @@ ggplot(data = peru_d) +
        caption="Datos de IGP2022")
   
 
-library(rcartocolor)
-library(plotly)
+
 #magnitud
 mapa_magnitud <- ggplot(data = peru_d) +
   geom_sf() +
@@ -140,3 +106,49 @@ ggplot(data = peru_d) +
        caption="Datos de IGP2022")
 
 
+
+
+
+#por region y años
+
+coordenadas_dep = data.frame(dep = c(), minx=c(), miny=c(), maxx = c(), maxy = c())
+
+for (i in 1:25) {
+  minx = as.data.frame(st_coordinates(peru_d[i,]$geometry))$X %>% min()
+  miny = as.data.frame(st_coordinates(peru_d[i,]$geometry))$Y %>% min()
+  maxx = as.data.frame(st_coordinates(peru_d[i,]$geometry))$X %>% max()
+  maxy = as.data.frame(st_coordinates(peru_d[i,]$geometry))$Y %>% max()
+  agregar = data.frame(dep = c(peru_d[i,]$NOMBDEP), minx=c(minx), miny=c(miny), maxx = c(maxx), maxy = c(maxy))
+  coordenadas_dep = rbind(coordenadas_dep,agregar)
+}
+
+porDepartamento <- function(departamento, yearsSelect){
+  depa = coordenadas_dep[coordenadas_dep == departamento,]
+  
+  ggplot(data = peru_d %>%
+           filter(NOMBDEP == departamento)) +
+    geom_sf() +
+    geom_point(data = datos3 %>% 
+                 filter(LONGITUD > depa$minx,
+                        LONGITUD < depa$maxx,
+                        LATITUD > depa$miny,
+                        LATITUD < depa$maxy,
+                        year(FECHA_UTC) %in% yearsSelect),
+               aes(x = LONGITUD,
+                   y = LATITUD,
+                   color = MAGNITUD,
+                   alpha = MAGNITUD,
+                   size = MAGNITUD))+
+    scale_radius(range = c(0.2,3))+
+    scale_color_viridis() +
+    labs(title=paste("Magnitud de los sismos en ", departamento),
+         subtitle=paste(yearsSelect, collapse = " - "),
+         caption="Datos de IGP2022")
+}
+
+year_test = c(1992,2001,2010,2020)
+porDepartamento("PUNO",year_test)
+
+porDepartamento("AREQUIPA")
+porDepartamento("LIMA")
+porDepartamento("TACNA")
