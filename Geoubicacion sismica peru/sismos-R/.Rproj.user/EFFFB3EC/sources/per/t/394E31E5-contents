@@ -148,6 +148,7 @@ porDepartamento <- function(departamento, yearsSelect){
 
 year_test = c(1992,2001,2010,2020)
 porDepartamento("PUNO",year_test)
+porDepartamento("PUNO",NULL)
 
 porDepartamento("AREQUIPA")
 porDepartamento("LIMA")
