@@ -21,7 +21,7 @@ ui <- fluidPage(
       selectInput('departamento', 'Departamento', vars, selected = vars[21]),
       strong("Años"),
       checkboxGroupInput(inputId = "syear", label = NULL, 
-                         choices = 1960:2021, selected = NULL, inline = T),
+                         choices = 1960:2021, selected = 2020, inline = T),
       actionButton("aplicar","Aplicar")
       #hr(),
       #fluidRow(column(3, verbatimTextOutput("value"))),
@@ -29,13 +29,7 @@ ui <- fluidPage(
     ),
     
     mainPanel(
-      fluidRow(
-        column(width = 6,
-               plotOutput("plot0")
-        ),
-        column(width = 6,
-               plotOutput("plot1"))
-      )
+      plotlyOutput("plot1")
     )
   )
 )
@@ -59,16 +53,20 @@ server <- function(input, output) {
     input$departamento
   })
   
-  selectedYear <- eventReactive(input$aplicar,{
+  #selectedYear <- eventReactive(input$aplicar,{
+  #  input$syear
+  #})
+  
+  selectedYear <- reactive({
     input$syear
   })
   
-  output$plot0 <- renderPlot({
-    mapa_magnitud
-  })
+  #output$plot0 <- renderPlot({
+  #  mapa_magnitud
+  #})
   
-  output$plot1 <- renderPlot({
-    porDepartamento(selectedDepartament(),selectedYear())
+  output$plot1 <- renderPlotly({
+    p_nacional(3,selectedYear())
   })
 }
 

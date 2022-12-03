@@ -14,67 +14,8 @@ library(plotly)
 library(sf)
 
 #######################NACIONAL#######################
-#Mapa de calor
-ggplot(data = peru_d) +
-  geom_sf() + 
-  stat_density2d(data = datos3,
-                 aes(x = LONGITUD ,
-                     y = LATITUD,
-                     fill = ..level..,
-                     alpha = ..level..),
-                 geom = "polygon",
-                 size = 0.01,
-                 bins = 8) +
-  scale_fill_gradient(low = "yellow",
-                      high = "red") +
-  scale_alpha(range = c(0.2, 0.7)) +
-  theme(legend.position = "none") +
-  labs(title="Mapa de calor",
-       subtitle="Desde el 1960",
-       caption="Datos de IGP2022")
 
-
-ggplot(data = peru_d) +
-  geom_sf() + 
-  stat_density2d(data = datos3 %>% filter(year(FECHA_UTC) == 2016),
-                 aes(x = LONGITUD ,
-                     y = LATITUD,
-                     fill = ..level..,
-                     alpha = ..level..),
-                 geom = "polygon",
-                 size = 0.01,
-                 bins = 8) +
-  scale_fill_gradient(low = "yellow",
-                      high = "red") +
-  scale_alpha(range = c(0.2, 0.7)) +
-  theme(legend.position = "none") +
-  labs(title="Mapa de calor",
-       subtitle="Desde el 1960",
-       caption="Datos de IGP2022")
-
-#Mapa de calor 2
-ggplot(data = peru_d) +
-  geom_sf() +
-  geom_density2d(data = datos3,
-                 aes(x = LONGITUD,
-                     y = LATITUD),
-                 size = 0.9,
-                 bins = 8) +
-  stat_density2d(data = datos3,
-                 aes(x = LONGITUD,
-                     y = LATITUD,
-                     fill = ..level..,
-                     alpha = ..level..),
-                 geom = "polygon",
-                 size = 0.01,
-                 bins = 8) +
-  theme(legend.position = "none")+
-  labs(title="Mapa de calor - 2",
-       subtitle="Desde el 1960",
-       caption="Datos de IGP2022")
-  
-
-p_nacional <- function(tipo, yearsSelect){
+p_nacional <- function(tipo, yearsSelect = 1960:2021){
   p = ggplot(data = peru_d) +
     geom_sf()
   #Mapa de calor 1
@@ -153,62 +94,9 @@ p_nacional <- function(tipo, yearsSelect){
 p_nacional(3, 1960:2021)
 p_nacional(1, year_test)
 
-#magnitud
-mapa_magnitud <- ggplot(data = peru_d) +
-  geom_sf() +
-  geom_point(data = datos3,
-             aes(x = LONGITUD,
-                 y = LATITUD,
-                 color = MAGNITUD,
-                 alpha = MAGNITUD,
-                 size = MAGNITUD))+
-  scale_radius(range = c(0.15,2.5))+
-  scale_color_viridis()+
-  labs(title="Magnitud de los sismos",
-       subtitle="Desde el 1960",
-       caption="Datos de IGP2022")
-
-mapa_magnitud
-
-#ggplotly(mapa_magnitud,tooltip = "MAGNITUD")
-
-#PROFUNDIDAD
-ggplot(data = peru_d) +
-  geom_sf() +
-  geom_point(data = datos3,
-             aes(x = LONGITUD,
-                 y = LATITUD,
-                 color = PROFUNDIDAD,
-                 alpha = PROFUNDIDAD,
-                 size = PROFUNDIDAD))+
-  scale_radius(range = c(0.2,3))+
-  scale_color_viridis()+
-  labs(title="Profundidad de los sismos",
-       subtitle="Desde el 1960",
-       caption="Datos de IGP2022")
-
-
-
-#POR AÑO
-ggplot(data = peru_d) +
-  geom_sf() +
-  geom_point(data = datos3 %>% filter(year(FECHA_UTC) == 2021),
-             aes(x = LONGITUD,
-                 y = LATITUD,
-                 color = MAGNITUD,
-                 alpha = MAGNITUD,
-                 size = MAGNITUD))+
-  scale_radius(range = c(1,3))+
-  scale_color_viridis()+
-  labs(title="Magnitud de los sismos",
-       subtitle="En el año 2021",
-       caption="Datos de IGP2022")
-
-
 
 
 ##################REGIONAL##############
-#por region y años
 
 coordenadas_dep = data.frame(dep = c(), minx=c(), miny=c(), maxx = c(), maxy = c())
 
