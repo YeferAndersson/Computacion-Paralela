@@ -3,7 +3,7 @@
     "path": "~/GitHub/Computacion-Paralela_Yefer/Geoubicacion sismica peru/sismos-R/ObservatorioSismico/app.R",
     "project_path": "ObservatorioSismico/app.R",
     "type": "r_source",
-    "hash": "217305418",
+    "hash": "531968912",
     "contents": "",
     "dirty": false,
     "created": 1669664275008.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "31,27",
-        "scrollLine": "19"
+        "cursorPosition": "58,91",
+        "scrollLine": "54"
     },
     "folds": "",
-    "lastKnownWriteTime": 1669992146,
+    "lastKnownWriteTime": 1670279265,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1669992146040,
+    "last_content_update": 1670279265602,
     "read_only": false,
     "read_only_alternatives": []
 }

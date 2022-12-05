@@ -56,18 +56,38 @@ ui <- navbarPage("PeruSeism",
                               ),
                               strong("Años"),
                                     checkboxGroupInput(inputId = "syear", label = NULL, 
-                                                       choices = 1960:2021, selected = 1960:2021, inline = T),
+                                                       choices = 1960:2021, selected = 2000:2021, inline = T),
                               actionButton("aplicar","Mostrar mapa"),
-                              width = 2
+                              width = 3,
+                              tags$head(tags$style("#plot1{height:85vh !important;}"))
                             ),
                             mainPanel(
-                              plotlyOutput("plot1", height = "100%"),
-                              width = 10
+                              plotlyOutput("plot1"),
+                              width = 9
                             )
                           )
                  ),
-                 tabPanel("Summary",
-                          verbatimTextOutput("summary")
+                 tabPanel("Regional",
+                          sidebarLayout(
+                            sidebarPanel(
+                              radioButtons("plotType_R", "Tipo de mapa",
+                                           c("De calor 1"= 1,
+                                             "De calor 2"= 2,
+                                             "Por Magnitud" = 3,
+                                             "Por profundidad" = 4)
+                              ),
+                              strong("Años"),
+                              checkboxGroupInput(inputId = "syear_R", label = NULL, 
+                                                 choices = 1960:2021, selected = 2000:2021, inline = T),
+                              actionButton("aplicar_R","Mostrar mapa"),
+                              width = 3,
+                              tags$head(tags$style("#plot1_R{height:85vh !important;}"))
+                            ),
+                            mainPanel(
+                              plotlyOutput("plot1_R"),
+                              width = 9
+                            )
+                          )
                  ),
                  navbarMenu("More",
                             tabPanel("Table",
