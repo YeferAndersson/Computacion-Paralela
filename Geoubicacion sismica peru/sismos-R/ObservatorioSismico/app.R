@@ -20,29 +20,7 @@ library(rcartocolor)
 library(plotly)
 library(sf)
 library(DT)
-vars <- peru_d$NOMBDEP
-# Define UI for application that draws a histogram
-#ui <- fluidPage(
-#  theme = shinytheme("cerulean"),
-#  pageWithSidebar(
-#    headerPanel('Iris k-means clustering'),
-#    
-#    sidebarPanel(
-#      selectInput('departamento', 'Departamento', vars, selected = vars[21]),
-#      strong("Años"),
-#      checkboxGroupInput(inputId = "syear", label = NULL, 
-#                         choices = 1960:2021, selected = 2020, inline = T),
-#      actionButton("aplicar","Aplicar")
-#      #hr(),
-#      #fluidRow(column(3, verbatimTextOutput("value"))),
-#      
-#    ),
-#    
-#    mainPanel(
-#      plotlyOutput("plot1")
-#    )
-#  )
-#)
+vars_dep <- peru_d$NOMBDEP
 
 ui <- navbarPage("PeruSeism",
                  tabPanel("Nacional",
@@ -70,21 +48,22 @@ ui <- navbarPage("PeruSeism",
                  tabPanel("Regional",
                           sidebarLayout(
                             sidebarPanel(
-                              radioButtons("plotType_R", "Tipo de mapa",
+                              selectInput('departamento', 'Departamento', vars_dep, selected = vars_dep[1]),
+                              radioButtons("plotType_Reg", "Tipo de mapa",
                                            c("De calor 1"= 1,
                                              "De calor 2"= 2,
                                              "Por Magnitud" = 3,
                                              "Por profundidad" = 4)
                               ),
                               strong("Años"),
-                              checkboxGroupInput(inputId = "syear_R", label = NULL, 
+                              checkboxGroupInput(inputId = "syear_Reg", label = NULL, 
                                                  choices = 1960:2021, selected = 2000:2021, inline = T),
-                              actionButton("aplicar_R","Mostrar mapa"),
+                              actionButton("aplicar_Reg","Mostrar mapa"),
                               width = 3,
-                              tags$head(tags$style("#plot1_R{height:85vh !important;}"))
+                              tags$head(tags$style("#plot_Reg{height:85vh !important;}"))
                             ),
                             mainPanel(
-                              plotlyOutput("plot1_R"),
+                              plotlyOutput("plot_Reg"),
                               width = 9
                             )
                           )
@@ -94,24 +73,6 @@ ui <- navbarPage("PeruSeism",
                                      DT::dataTableOutput("table")
                             ),
                             tabPanel("About",
-                                     fluidRow(
-                                       column(6,
-                                              includeMarkdown("")
-                                       ),
-                                       column(3,
-                                              img(class="img-polaroid",
-                                                  src=paste0("http://upload.wikimedia.org/",
-                                                             "wikipedia/commons/9/92/",
-                                                             "1919_Ford_Model_T_Highboy_Coupe.jpg")),
-                                              tags$small(
-                                                "Source: Photographed at the Bay State Antique ",
-                                                "Automobile Club's July 10, 2005 show at the ",
-                                                "Endicott Estate in Dedham, MA by ",
-                                                a(href="http://commons.wikimedia.org/wiki/User:Sfoskett",
-                                                  "User:Sfoskett")
-                                              )
-                                       )
-                                     )
                             )
                  ),
                  theme = shinytheme("cerulean")
@@ -122,12 +83,8 @@ ui <- navbarPage("PeruSeism",
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
-  #selectedDepartament <- eventReactive(input$aplicar,{
-  #  input$departamento
-  #})
-  
-  
-  selectedTipe <- eventReactive(input$aplicar,{
+  #Nacional
+  selectedType <- eventReactive(input$aplicar,{
     input$plotType
   })
   
@@ -135,19 +92,27 @@ server <- function(input, output) {
     input$syear
   })
   
-  
-  
-  #selectedYear <- reactive({
-  #  input$syear
-  #})
-  
-  #output$plot0 <- renderPlot({
-  #  mapa_magnitud
-  #})
-  
   output$plot1 <- renderPlotly({
-    p_nacional(selectedTipe(),selectedYear())
+    p_nacional(selectedType(),selectedYear())
   })
+  
+  #Regional
+  selectedDepartament <- eventReactive(input$aplicar_Reg,{
+    input$departamento
+  })
+  
+  selectedType_Reg <- eventReactive(input$aplicar_Reg,{
+    input$plotType_Reg
+  })
+  
+  selectedYear_Reg <- eventReactive(input$aplicar_Reg,{
+    input$syear_Reg
+  })
+  
+  output$plot_Reg <- renderPlotly({
+    p_departamento(selectedType_Reg(),selectedDepartament(),selectedYear_Reg())
+  })
+  
 }
 
 # Run the application 
