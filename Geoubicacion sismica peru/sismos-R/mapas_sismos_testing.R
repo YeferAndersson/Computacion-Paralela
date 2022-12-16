@@ -1,5 +1,5 @@
-dir_datos <- file.choose()
-datos <- read.csv(dir_datos,header = T, sep = ",")
+dir_datosTest <- file.choose()
+datosTest <- read.csv(dir_datosTest,header = T, sep = ",")
 
 library(sf)
 #install.packages("tmap")
@@ -7,16 +7,16 @@ library(tmap)
 library(sp)
 library(ggplot2)
 
-head(datos)
+head(datosTest)
 
-coordinates(datos) <- ~LONGITUD + LATITUD
+coordinates(datosTest) <- ~LONGITUD + LATITUD
 
-datos <- st_as_sf(datos)
+datosTest <- st_as_sf(datosTest)
 
-st_crs(datos) <- 4326
+st_crs(datosTest) <- 4326
 
 
-ggplot(data = datos) + geom_sf(alpha = 0.1)
+ggplot(data = datosTest) + geom_sf(alpha = 0.1)
 
 
 install.packages("mapview")
@@ -26,12 +26,12 @@ library(mapview)
 library(mapedit)
 
 mapview(peru_d) +
-mapview(datos, zcol = "MAGNITUD",legend = FALSE, cex = "pop")
+mapview(datosTest, zcol = "MAGNITUD",legend = FALSE, cex = "pop")
 
 mapview(africa)
 
 #Con mapas leaflet
-datos2 <- read.csv(dir_datos,header = T, sep = ",")
+datosTest2 <- read.csv(dir_datosTest,header = T, sep = ",")
 library(leaflet)
 library(leaflet.extras) 
 library(rworldxtra)
@@ -41,14 +41,14 @@ library(raster)
 
 leaflet() %>% 
   addTiles() %>% 
-  addCircle(data = datos2, lat = ~LATITUD, lng = ~LONGITUD)
+  addCircle(data = datosTest2, lat = ~LATITUD, lng = ~LONGITUD)
 
 #leaflet() %>% 
  # addTiles() %>% 
-  #addAwesomeMarkers(data = datos2, lat = ~LATITUD, lng = ~LONGITUD)
+  #addAwesomeMarkers(data = datosTest2, lat = ~LATITUD, lng = ~LONGITUD)
 
 
 leaflet() %>% 
   addTiles() %>% 
-  addHeatmap(data = datos2, lat = ~LATITUD, lng = ~LONGITUD, blur = 2.5, radius = 2.1)
+  addHeatmap(data = datosTest2, lat = ~LATITUD, lng = ~LONGITUD, blur = 2.5, radius = 2.1)
 

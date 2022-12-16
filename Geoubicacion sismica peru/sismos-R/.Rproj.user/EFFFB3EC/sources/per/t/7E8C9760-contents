@@ -1,4 +1,4 @@
-install.packages(c("sf","purrr","ggrepel","readxl"))
+#install.packages(c("sf","purrr","ggrepel","readxl"))
 
 
 library(sf)
@@ -24,15 +24,3 @@ ggplot(data = peru_d) +
 ggplot(data = peru_d %>%
          filter(NOMBDEP=="PUNO")) +
   geom_sf()
-
-peru_d
-
-#nacimientos
-ggplot(peru_d) +
-  geom_sf(aes(fill = TOTAL_NACI))+
-  labs(title = "Total nacimientos",
-       caption = "Fuente: GEO GPS Perú
-       Elaboración propia",
-       x="Longitud",
-       y="Latitud")+
-  scale_fill_continuous(guide_legend(title = "Total de nacimientos"))

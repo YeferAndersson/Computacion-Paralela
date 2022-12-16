@@ -1,6 +1,6 @@
 #nuevas formas
 
-str(datos3)
+str(datos)
 
 library(sp)
 library(rmarkdown)
@@ -20,7 +20,7 @@ p_nacional <- function(tipo, yearsSelect = 1960:2021){
     geom_sf()
   #Mapa de calor 1
   if(tipo == 1){
-    p = p + stat_density2d(data = datos3 %>%  filter(year(FECHA_UTC) %in% yearsSelect),
+    p = p + stat_density2d(data = datos %>%  filter(year(FECHA_UTC) %in% yearsSelect),
                      aes(x = LONGITUD ,
                          y = LATITUD,
                          fill = ..level..,
@@ -39,12 +39,12 @@ p_nacional <- function(tipo, yearsSelect = 1960:2021){
   
   #Mapa de calor 2
   if(tipo == 2){
-    p = p + geom_density2d(data = datos3 %>%  filter(year(FECHA_UTC) %in% yearsSelect),
+    p = p + geom_density2d(data = datos %>%  filter(year(FECHA_UTC) %in% yearsSelect),
                           aes(x = LONGITUD,
                               y = LATITUD),
                           size = 0.9,
                           bins = 8) +
-      stat_density2d(data = datos3 %>%  filter(year(FECHA_UTC) %in% yearsSelect),
+      stat_density2d(data = datos %>%  filter(year(FECHA_UTC) %in% yearsSelect),
                      aes(x = LONGITUD,
                          y = LATITUD,
                          fill = ..level..,
@@ -60,7 +60,7 @@ p_nacional <- function(tipo, yearsSelect = 1960:2021){
   
   #Mapa de magnitudes
   if(tipo == 3){
-    p = p + geom_point(data = datos3 %>%  filter(year(FECHA_UTC) %in% yearsSelect),
+    p = p + geom_point(data = datos %>%  filter(year(FECHA_UTC) %in% yearsSelect),
                        aes(x = LONGITUD,
                            y = LATITUD,
                            color = MAGNITUD,
@@ -75,7 +75,7 @@ p_nacional <- function(tipo, yearsSelect = 1960:2021){
   
   #Mapa de profundidades
   if(tipo == 4){
-    p = p + geom_point(data = datos3 %>%  filter(year(FECHA_UTC) %in% yearsSelect),
+    p = p + geom_point(data = datos %>%  filter(year(FECHA_UTC) %in% yearsSelect),
                        aes(x = LONGITUD,
                            y = LATITUD,
                            color = PROFUNDIDAD,
@@ -117,7 +117,7 @@ p_departamento <- function(tipo, departamento, yearsSelect){
     geom_sf()
   #Mapa de calor 1
   if(tipo == 1){
-    p = p + stat_density2d(data = datos3 %>% 
+    p = p + stat_density2d(data = datos %>% 
                              filter(LONGITUD > depa$minx,
                                     LONGITUD < depa$maxx,
                                     LATITUD > depa$miny,
@@ -141,7 +141,7 @@ p_departamento <- function(tipo, departamento, yearsSelect){
   
   #Mapa de calor 2
   if(tipo == 2){
-    p = p + geom_density2d(data = datos3 %>%  
+    p = p + geom_density2d(data = datos %>%  
                              filter(LONGITUD > depa$minx,
                                                      LONGITUD < depa$maxx,
                                                      LATITUD > depa$miny,
@@ -151,7 +151,7 @@ p_departamento <- function(tipo, departamento, yearsSelect){
                                y = LATITUD),
                            size = 0.9,
                            bins = 8) +
-      stat_density2d(data = datos3 %>% 
+      stat_density2d(data = datos %>% 
                        filter(LONGITUD > depa$minx,
                                                LONGITUD < depa$maxx,
                                                LATITUD > depa$miny,
@@ -172,7 +172,7 @@ p_departamento <- function(tipo, departamento, yearsSelect){
   
   #Mapa de magnitudes
   if(tipo == 3){
-    p = p + geom_point(data = datos3 %>% 
+    p = p + geom_point(data = datos %>% 
                          filter(LONGITUD > depa$minx,
                                                  LONGITUD < depa$maxx,
                                                  LATITUD > depa$miny,
@@ -192,7 +192,7 @@ p_departamento <- function(tipo, departamento, yearsSelect){
   
   #Mapa de profundidades
   if(tipo == 4){
-    p = p + geom_point(data = datos3 %>%  
+    p = p + geom_point(data = datos %>%  
                          filter(LONGITUD > depa$minx,
                                                  LONGITUD < depa$maxx,
                                                  LATITUD > depa$miny,

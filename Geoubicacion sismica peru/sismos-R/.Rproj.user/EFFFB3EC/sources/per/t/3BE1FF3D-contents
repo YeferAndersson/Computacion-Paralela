@@ -3,20 +3,24 @@
 library(lubridate)
 library(tidyverse)
 
-datos3 <- read.csv(dir_datos,header = T, sep = ",")
+#importar datos CSV
+dir_datos <- file.choose()
+datos <- read.csv(dir_datos,header = T, sep = ",")
 
-str(datos3)
+str(datos)
+head(datos)
+datos <- datos[-8]
 
-head(datos3)
+#transformacion a datos de fecha
+datos = datos %>% transform(FECHA_UTC = as.Date(as.character(FECHA_UTC), format = "%Y%m%d"))
 
-datos3 = datos3 %>% transform(FECHA_UTC = as.Date(as.character(FECHA_UTC), format = "%Y%m%d"),
-                     FECHA_CORTE = as.Date(as.character(FECHA_CORTE), format = "%Y%d%m"))
+year(datos$FECHA_UTC)
+max(year(datos$FECHA_UTC))
+min(year(datos$FECHA_UTC))
 
-year(datos3$FECHA_UTC)
-max(year(datos3$FECHA_UTC))
-min(year(datos3$FECHA_UTC))
 
-freq <- table(year(datos3$FECHA_UTC))
+
+freq <- table(year(datos$FECHA_UTC))
 freq <- as.data.frame(freq)
 
 x <- freq$Var1
@@ -25,7 +29,7 @@ str(freq)
 ggplot(freq, mapping = aes(Var1,Freq)) + geom_col()
 ggplot(freq, mapping = aes(as.numeric(Var1),Freq)) + geom_point() + geom_line()
 
-ggplot(datos3, aes(x = year(FECHA_UTC))) + geom_bar()
-ggplot(datos3, aes(x = year(FECHA_UTC))) + geom_smooth()
+ggplot(datos, aes(x = year(FECHA_UTC))) + geom_bar()
+ggplot(datos, aes(x = year(FECHA_UTC))) + geom_smooth()
 
 

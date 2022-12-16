@@ -3,7 +3,7 @@
     "path": "~/GitHub/Computacion-Paralela_Yefer/Geoubicacion sismica peru/sismos-R/mapas_sismos.R",
     "project_path": "mapas_sismos.R",
     "type": "r_source",
-    "hash": "570323716",
+    "hash": "3050754813",
     "contents": "",
     "dirty": false,
     "created": 1669049973409.0,
@@ -13,15 +13,15 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "110,1",
-        "scrollLine": "109"
+        "cursorPosition": "68,18",
+        "scrollLine": "60"
     },
     "folds": "",
-    "lastKnownWriteTime": 1670875428,
+    "lastKnownWriteTime": 1671223673,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1670875429010,
+    "last_content_update": 1671223673607,
     "read_only": false,
     "read_only_alternatives": []
 }
