@@ -72,10 +72,10 @@ ui <- navbarPage("PeruSeism",
                             tabPanel("Table",
                                      DT::dataTableOutput("table")
                             ),
-                            tabPanel("About",
+                            tabPanel("Estadísticas",
                             )
                  ),
-                 theme = shinytheme("cerulean")
+                 theme = shinytheme("flatly")
 )
 
 
@@ -112,6 +112,12 @@ server <- function(input, output) {
   output$plot_Reg <- renderPlotly({
     p_departamento(selectedType_Reg(),selectedDepartament(),selectedYear_Reg())
   })
+  
+  
+  output$table <- DT::renderDataTable({
+    DT::datatable(datos)
+  })
+  
   
 }
 

@@ -1,6 +1,3 @@
-#install.packages(c("sf","purrr","ggrepel","readxl"))
-
-
 library(sf)
 library(purrr)
 library(tidyverse)
@@ -12,7 +9,7 @@ dirmapas <- "C:/Users/Lenovo/Documents/GitHub/Computacion-Paralela_Yefer/Geoubic
 
 setwd(dirmapas)
 
-peru_d <- st_read("DEPARTAMENTOS_inei_geogpsperu_suyopomalia.shp")
+peru_d <- st_read("DEPARTAMENTOS_inei_geogpsperu_suyopomalia.shp") # formato: Shapefile datos espaciales
 
 peru_d
 
